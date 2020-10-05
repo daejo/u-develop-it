@@ -6,6 +6,11 @@
       // to open data base ||  .open db/election.db
       // to see tables of a database || .schema
       // to print column headers ||  .headers on  ||  .mode column
+  //* INSTALL PACKAGES */
+      // Initilizes Node.js ||  npm init --y
+      // Creates .gitignore and adds node_modules insided ||  echo "node_modules/" > .gitignore
+      // Installs express and sqlite3 packages ||  npm install express sqlite3
+      // Installs jest ||  npm install jest --save-dev
 // utility to check if an object has the required properties
 // e.g., inputCheck(object, 'prop1', 'prop2', 'etc')
 
