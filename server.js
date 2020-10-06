@@ -11,6 +11,7 @@
       // Creates .gitignore and adds node_modules insided ||  echo "node_modules/" > .gitignore
       // Installs express and sqlite3 packages ||  npm install express sqlite3
       // Installs jest ||  npm install jest --save-dev
+
 const sqlite3 = require('sqlite3').verbose();
 const express = require('express');
 
@@ -38,7 +39,11 @@ app.use(express.json());
 
 // Get all candidates
 app.get('/api/candidates', (req, res) => {
-    const sql = `SELECT * FROM candidates`;
+    const sql = `SELECT candidates.*, parties.name 
+             AS party_name 
+             FROM candidates 
+             LEFT JOIN parties 
+             ON candidates.party_id = parties.id`;
     const params = [];
     db.all(sql, params, (err, rows) => {
       if (err) {
@@ -55,8 +60,12 @@ app.get('/api/candidates', (req, res) => {
 
 // Get single candidate
 app.get('/api/candidate/:id', (req, res) => {
-    const sql = `SELECT * FROM candidates 
-                 WHERE id = ?`;
+  const sql = `SELECT candidates.*, parties.name 
+  AS party_name 
+  FROM candidates 
+  LEFT JOIN parties 
+  ON candidates.party_id = parties.id 
+  WHERE candidates.id = ?`;
     const params = [req.params.id];
     db.get(sql, params, (err, row) => {
       if (err) {
