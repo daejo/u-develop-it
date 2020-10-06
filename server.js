@@ -11,27 +11,19 @@
       // Creates .gitignore and adds node_modules insided ||  echo "node_modules/" > .gitignore
       // Installs express and sqlite3 packages ||  npm install express sqlite3
       // Installs jest ||  npm install jest --save-dev
-
-const sqlite3 = require('sqlite3').verbose();
 const express = require('express');
-
+const db = require('./db/database');
 const PORT = process.env.PORT || 3001;
 const app = express();
+
+const apiRoutes = require('./routes/apiRoutes');
+app.use('/api', apiRoutes);
 
 // EXPRESS MIDDLEWARE//
 // ======================= //
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 // ======================= //
-
-// Connect to database
-const db = new sqlite3.Database('./db/election.db', err => {
-    if (err) {
-      return console.error(err.message);
-    }
-  
-    console.log('Connected to the election database.');
-});
 
 // Default response for any other request(Not Found) Catch all
 app.use(express.urlencoded({ extended: false }));
