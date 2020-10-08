@@ -4,10 +4,12 @@ const db = require('../../db/database');
 const inputCheck = require('../../utils/inputCheck');
 
 router.get('/votes', (req, res) => {
-  const sql = `SELECT * FROM votes
-  LEFT JOIN candidates ON votes.candidate_id = candidate.id
-  LEFT JOIN parties ON candidates.party_id = parties.id
-  GROUP BY candidate_id ORDER BY count DESC;`;
+  const sql = `SELECT votes.*,
+            LEFT JOIN candidates 
+            ON votes.candidate_id = candidates.id
+            LEFT JOIN parties 
+            ON candidates.party_id = parties.id
+            GROUP BY candidate_id ORDER BY count DESC;`;
   const params = [];
   db.all(sql, params, (err, rows) => {
     if (err) {
